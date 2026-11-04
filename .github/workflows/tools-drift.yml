@@ -1,0 +1,52 @@
+name: tools.json drift (daily)
+on:
+  schedule:
+    - cron: "17 9 * * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci --no-audit --no-fund
+      - name: Self-test (red-first fixture) - the check must fail on a known mismatch
+        run: |
+          set +e
+          node scripts/build-tools.mjs --check --tools test/fixtures/tools.drift-fixture.json
+          rc=$?
+          if [ "$rc" -ne 1 ]; then echo "drift check did not go red on the fixture (exit $rc)"; exit 1; fi
+          echo "drift check went red on the fixture as expected"
+      - name: Compare tools.json with the live public Actor input schemas
+        id: check
+        run: |
+          set -o pipefail
+          node scripts/build-tools.mjs --check 2>&1 | tee drift.txt
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Python bundled tools.json vs the live public input schemas
+        id: pycheck
+        run: |
+          set -o pipefail
+          python python/scripts/build_tools.py --check 2>&1 | tee -a drift.txt
+      - name: Open an issue on drift
+        if: failure() && (steps.check.outcome == 'failure' || steps.pycheck.outcome == 'failure')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="tools.json drift: Actor input schemas changed"
+          if [ -z "$(gh issue list --state open --search "$title in:title" --json number -q '.[].number')" ]; then
+            gh issue create --title "$title" --body "The daily check found that tools.json no longer matches the public input schemas.
+
+          \`\`\`
+          $(cat drift.txt)
+          \`\`\`
+
+          Fix: run \`npm run build:tools\`, review and commit. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          fi

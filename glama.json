@@ -1,0 +1,9 @@
+{
+  "$schema": "https://glama.ai/mcp/schemas/server.json",
+  "maintainers": [
+    "GeminiGeorge22"
+  ],
+  "name": "Spotify Play Count MCP: Plays & Monthly Listeners",
+  "description": "Spotify play counts for any track, album, artist or playlist, plus monthly listeners and followers. Hosted remote MCP on Apify's gateway, plus an open-source Node.js and Python stdio proxy in this repo.",
+  "category": "Entertainment"
+}

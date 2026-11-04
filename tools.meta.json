@@ -1,0 +1,3 @@
+{
+  "publicrecords/spotify-play-count-scraper": "Use when you need Spotify play counts: the total plays of every track behind a track, album, artist or playlist link, plus an artist's monthly listeners, followers, world rank and top cities. Optional streams over the last 1, 7 and 30 days for tracks already in daily tracking; those fields stay empty for a track's first day and fill in once it has history. Good for release tracking, playlist checks and artist comparisons; not for private Spotify for Artists data or royalties."
+}

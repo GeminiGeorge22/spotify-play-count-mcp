@@ -1,0 +1,48 @@
+{
+  "name": "spotify-play-count-mcp",
+  "version": "0.1.0",
+  "description": "Stdio MCP server for Spotify play counts, monthly listeners and followers via Apify's hosted MCP gateway",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "spotify-play-count-mcp": "src/server.js"
+  },
+  "main": "src/proxy.js",
+  "files": [
+    "src",
+    "tools.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test test/env-guard.test.js test/proxy.test.js",
+    "build:tools": "node scripts/build-tools.mjs",
+    "check:tools": "node scripts/build-tools.mjs --check"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GeminiGeorge22/spotify-play-count-mcp.git"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "mcp-server",
+    "apify",
+    "spotify",
+    "music",
+    "play-count",
+    "monthly-listeners"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2"
+  },
+  "mcpProxy": {
+    "actors": [
+      "publicrecords/spotify-play-count-scraper"
+    ]
+  }
+}

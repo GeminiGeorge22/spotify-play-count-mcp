@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling>=1.21"]
+build-backend = "hatchling.build"
+
+[project]
+name = "spotify-play-count-mcp"
+version = "0.1.0"
+description = "Stdio MCP server for Spotify play counts, monthly listeners and followers via Apify's hosted MCP gateway"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+keywords = ["mcp", "model-context-protocol", "mcp-server", "apify", "spotify", "music", "play-count", "monthly-listeners"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Operating System :: OS Independent",
+  "Topic :: Software Development :: Libraries",
+]
+dependencies = ["mcp>=2.3,<3", "anyio>=4.9"]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[project.scripts]
+spotify-play-count-mcp = "spotify_play_count_mcp.server:main"
+
+[project.urls]
+Homepage = "https://github.com/GeminiGeorge22/spotify-play-count-mcp"
+Source = "https://github.com/GeminiGeorge22/spotify-play-count-mcp/tree/main/python"
+Issues = "https://github.com/GeminiGeorge22/spotify-play-count-mcp/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/spotify_play_count_mcp"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "tests", "scripts", "README.md", "LICENSE", "pyproject.toml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

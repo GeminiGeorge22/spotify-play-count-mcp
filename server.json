@@ -1,0 +1,26 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.GeminiGeorge22/spotify-play-count-mcp",
+  "title": "Spotify Play Count MCP: Plays & Monthly Listeners",
+  "description": "Spotify play counts for any track, album, artist or playlist, plus monthly listeners and followers.",
+  "version": "1.0.0",
+  "websiteUrl": "https://apify.com/publicrecords/spotify-play-count-scraper",
+  "repository": {
+    "url": "https://github.com/GeminiGeorge22/spotify-play-count-mcp",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.apify.com?tools=publicrecords/spotify-play-count-scraper",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Optional if you use Apify OAuth. Otherwise: Bearer <APIFY_TOKEN> (your own Apify API token).",
+          "isRequired": false,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}
